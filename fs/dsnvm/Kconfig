@@ -1,0 +1,18 @@
+config DSNVM
+	tristate "Distributed Shared Non-Volatile Memory"
+	default y
+	help
+	   Say Y here to enable DSNVM.
+
+config DSNVM_IBV
+	tristate "DSNVM IB Stack"
+	default y
+	help
+		Say Y here to enable DSNVM IB stack.
+
+config DSNVM_CLIENT
+	tristate "DSNVM Client"
+	depends on DSNVM
+	default y
+	help
+	   Say Y here to enable DSNVM client.
