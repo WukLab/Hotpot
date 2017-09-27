@@ -1,0 +1,38 @@
+# Latency of begin/commit xact, in usec
+#
+#	nr_thread_per_node:	1
+#	nr_areas:		100
+#	replica_degree:		1
+#	area_size:		4KB
+#	[ nr_nodes ]:		1, 2, 4, 8, 12
+#
+#
+#	Sequential (conflict) areas within xact
+#	MRMW
+#
+# 1000 xact, 100 areas/xact, and each xact has the same 100 areas
+# which means we are repeatly using the same 100 areas.
+
+
+# nr_nodes:	1	2	4	8	12
+# Begin
+#					44.0
+#					44.1
+#					42.9
+#					42.4
+#					69.2
+#					69.3
+#					68.9
+#					69.0
+#####
+# Commit				2252.6
+#					1913.5
+#					2463.4
+#					2488.3
+#					2336.1
+#					1881.5
+#					2644.2
+#					2605.6
+
+begin		55	46	50	56.2
+commit		136	866	1150	2323.1

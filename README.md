@@ -1,27 +1,15 @@
-## Hotpot
-Hotpot is an open-source, kernel-level, RDMA-based DSPM system.
+#Hotpot
+Hotpot is a kernel-level, RDMA-based DSPM system. We build hotpot as a linux module.
+Some part of the kernel is changed to accomplish goals hotpot wants to achieve.
 
-## About the source code:
-You can find all Hotpot core code at `fs/dsnvm/`.
-We modified several kernel source files, which means you need to
-download this repo and compile a new kernel from it.
-Hotpot has to run on this kernel.  
-(We will update a diff file compared with vanilla kernel soon).
+The `hotpot-kernel` is a modified 3.11.1 Linux kernel. Some modifications are not
+necessary with newer kernels. But given the choice we made at the beginning of
+the project, we just stick to it now.
 
-## Caution
-THIS IS A *BETA* VERSION, USE UNDER YOUR OWN RISK!  
-(We will have a stable version soon)
+If you want to run Hotpot, you need to first install `hotpot-kernel` with old
+config from your machine. Make sure you can boot the modified 3.11.1 kernel.
 
-## Compile
-### Client
-- Compile a new kernel from this repo and reboot to it
-- Go into fs/dsnvm. Do `make`, which will generate two modules: `rc_pingpong.ko` and `dsnvm.ko`.
+All Hotpot code is in `hotpot/`. Please check it out.
 
-### Server
-- Go to fs/dsnvm/server, issue make to get the server.
-
-## How to Run
-Coming soon with a full documentation.
-
-Related Paper:  
-`Distributed Shared Persistent Memory, SoCC17`
+#Caution
+This system is BETA version, use under your own risk!

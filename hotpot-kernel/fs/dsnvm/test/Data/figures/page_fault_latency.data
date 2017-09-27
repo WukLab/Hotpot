@@ -1,0 +1,7 @@
+# Average page fault latency: (ns)
+#
+# dsnvm cow: 2757-796 = 1961
+
+#	Anonymous	File-Backed	Local-DSNVM	Remote-DSNVM
+Read	0.344		0.690		0.796		9.726
+Write	0.796		1.007		1.916		9.800

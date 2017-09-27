@@ -1,0 +1,14 @@
+# Latency of begin/commit xact, in usec
+#
+#	nr_thread_per_node:	1
+#	nr_areas:		100
+#	[ replica_degree ]:	1, 2, 3, 4
+#	area_size:		4KB
+#	nr_nodes:		4
+#
+#	Random areas within xact
+#	MRMW
+
+#replica_degree	1	2	3	4
+begin		27	27	28	30
+commit		1212	1300		1214

@@ -1,0 +1,16 @@
+#	DR_SIZE:		16MB
+#	nr_threads_per_node:	1
+#	[ NR_REPLICA ]:		1, 2, 3, 4
+#	NR_AREAS:		100
+#	AREA_SIZE:		4KB
+#	NR_NODES:		4
+#
+#	Multiple Readers Single Writer (MRSW) mode
+#
+#	Run 1000 xacts, 100 areas/xact.
+#
+#	Pure sequential and non-overlapping xact
+
+# NR_REPLICA:	1	2	3	4
+begin		167	167	168	170
+commit		1886	2030	2423	3021
