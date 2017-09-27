@@ -12,17 +12,10 @@ For more information, check https://engineering.purdue.edu/WukLab/hotpot-socc17.
 To cite Hotpot, please use:
 
 @inproceedings {Shan17-SOCC-Hotpot,
-
   author = {Yizhou Shan and Shin-Yeh Tsai and Yiying Zhang},
-  
   title = {Distributed Shared Persistent Memory},
-  
   booktitle = {Proceedings of the 8th Annual Symposium on Cloud Computing (SOCC '17)},
-  
   year = {2017},
-  
   address = {Santa Clara, CA, USA},
-  
   month = {September}
- 
  }
