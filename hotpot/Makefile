@@ -9,7 +9,6 @@ obj-m += dsnvm.o
 # Transaction Related
 dsnvm-y := xact.o
 dsnvm-y += xact_mrsw_master.o
-dsnvm-y += xact_recovery.o
 
 # Hotpot Filesystem Interface
 dsnvm-y += super.o
@@ -25,9 +24,6 @@ dsnvm-y += migrate.o
 dsnvm-y += page_alloc.o
 dsnvm-y += swap.o
 dsnvm-y += event.o
-
-# Built-in
-obj-y := syscall.o
 
 # Targets
 all:
