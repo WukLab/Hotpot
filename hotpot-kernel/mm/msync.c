@@ -19,7 +19,6 @@
 struct dsnvm_apis *dsnvmapi;
 EXPORT_SYMBOL(dsnvmapi);
 
-// DSNVM register function pointers
 void dsnvm_reg_begin_or_commit_xact_user(void *funcptr)
 {
 	dsnvmapi->begin_or_commit_xact_user = funcptr;
@@ -56,26 +55,18 @@ SYSCALL_DEFINE3(msync, unsigned long, start, size_t, len, int, flags)
 
 	switch (flags) {
 	case DSNVM_BEGIN_XACT_FLAG:	
-	//	printk(KERN_CRIT "begin xact start %lx len %d\n", 
-	//			start, len);
 		error = dsnvmapi->begin_or_commit_xact_user(start, len, 1);
 		return error;
 
 	case DSNVM_COMMIT_XACT_FLAG:
-	//	printk(KERN_CRIT "commit xact start %lx len %d\n", 
-	//			start, len);
 		error = dsnvmapi->begin_or_commit_xact_user(start, len, 0);
 		return error;
 	
 	case DSNVM_BEGIN_XACT_SINGLE_FLAG:	
-	//	printk(KERN_CRIT "begin xact single start %lx len %d\n", 
-	//			start, len);
 		error = dsnvmapi->begin_or_commit_xact_user_single(start, len, 1);
 		return error;
 
 	case DSNVM_COMMIT_XACT_SINGLE_FLAG:
-	//	printk(KERN_CRIT "commit xact single start %lx len %d\n", 
-	//			start, len);
 		error = dsnvmapi->begin_or_commit_xact_user_single(start, len, 0);
 		return error;
 	
