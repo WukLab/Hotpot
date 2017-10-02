@@ -53,6 +53,9 @@ After you can `./install.sh`, you should be able to see some output at CD side. 
 ## S7: Run User Programs
 There are several code samples under `hotpot/test/`. Basically, we `open (or create)` a dataset by calling POSIX `open`. After that, the opened fd will be mmap'ed into application's address space. If mmap succeed, application can access the DSPM space directly and transpatently.
 
+### Debug Hotpot
+Hotpot will create two special files: `/proc/dsnvm-event` and `/proc/dsnvm`. The first one lists a lot of hotpot internal activities, which will help us to understand what is going within the system. The latter one lists some general informations. Both of them will help us debug and tune the system.
+
 ## To cite Hotpot, please use:
 
 >\@inproceedings{Shan17-SOCC-Hotpot\,  
