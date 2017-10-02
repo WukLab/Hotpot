@@ -38,7 +38,7 @@ In our setting, IB needs Ethernet to bootstrap the initial connection. That is w
 with the IP address of your CD (Kind of raw, well..).
 
 ### S4.2: Config Hotpot
-Hotpot has several config options that have to be configured at compile time. TODO: A detailed list and explanation.
+Hotpot has several config options that have to be configured at compile time. The configurations have already been set if you are running master. TODO: A detailed list and explanation.
 
 ### S4.3: Recompile Modules
 After `S4.1` and `S4.2`, you need to recompile by doing `make` again.
