@@ -43,10 +43,10 @@ Hotpot has several config options that have to be configured at compile time. TO
 ### S4.3: Recompile Modules
 After `S4.1` and `S4.2`, you need to recompile by doing `make` again.
 
-# S5: Run CD
+## S5: Run CD
 > `./mgmt_server`
 
-# S6: Run Hotpot
+## S6: Run Hotpot
 There is a simple script `hotpot/install.sh`, which help us to install modules and mount hotpot's filesystem. The hotpot's filesystem interface is used to simplify our programming experience by supporting commonly used POSIX APIs, e.g., `open`, `close`, and `msync`.  
 After you can `./install.sh`, you should be able to see some output at CD side. To connect multiple Hotpot nodes, just do the above steps one by one.  
 
