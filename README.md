@@ -30,7 +30,7 @@ Hotpot's CD source code is located in `hotpot/server/`. Assume this server has i
 ### S3: Config Hotpot
 
 #### S3.1: Config Network
-In our setting, IB needs Ethernet to bootstrap the initial connection. That is why we need the IP address of CD. But do note that all hotpot nodes only need to know the IP address of CD. Currently, the IP address of CD has to be manually changed in the source code. To do so, open `hotpot/rc_pingpong.c`, and replace the following line:  
+In our setting, IB needs Ethernet to bootstrap the initial connection. That is why we need the IP address of CD. But do note that all hotpot nodes only need to know the IP address of CD. Currently, the IP address of CD has to be manually changed in the source code. To do so, open `hotpot/dsnvm-net.c`, and replace the following line:  
 >`addr.sin_addr.s_addr = htonl((((((128 << 8) | 46) << 8) | 115) << 8) | 33);`  
 with the IP address of your CD (Kind of raw, well..).
 
@@ -38,7 +38,7 @@ with the IP address of your CD (Kind of raw, well..).
 Hotpot has several options that can be configured at compile time. The default configurations have been tested to work well for our applications. We will provide a documentation of these configurations soon.
 
 ### S4: Compile Modules
-After boot into `hotpot-kernel` successfully (S2), go to `hotpot` directory and type `make` to compile two modules. If the kernel is right, you will have 2 modules compiled: `dsnvm.ko` and `rc_pingpong.ko`. `dsnvm.ko` is the Hotpot module, `rc_pingpong.ko` is a customized RDMA-stack which Hopot runs on top of.
+After boot into `hotpot-kernel` successfully (S2), go to `hotpot` directory and type `make` to compile two modules. If the kernel is right, you will have 2 modules compiled: `dsnvm.ko` and `dsnvm-net.ko`. `dsnvm.ko` is the Hotpot module, `dsnvm-net.ko` is a customized RDMA-stack which Hopot runs on top of.
 
 ### S5: Run CD
 > `./mgmt_server`
