@@ -30,26 +30,28 @@ static void usage(const char *argv0)
 	printf("  %s            start a server and wait for connection\n", argv0);
 	printf("\n");
 	printf("Options:\n");
-	printf("  -i, --ib-port=<port>   use port <port> of IB device (default 1)\n");
+	printf("  -l, --listen-port=<port>   (Required) use <port> to listen hotpot connections\n");
+	printf("  -i, --ib-port=<port>       (Optional) use <port> of IB device (default 1)\n");
 }
+
+int listen_port = -1;
 
 int main(int argc, char *argv[])
 {
-    //	if (pass_argument(argc, argv))
-    //		return 1;
     int     ib_port = 1;
     char    hostname[STRING_LENGTH];
     gethostname(hostname, STRING_LENGTH);//Get own host name
 
     static struct option long_options[] = {
-  	{ "ib-port",	1,	0,	'i' },
-	{ NULL,		0,	NULL,	0 }
+  	{ "ib-port",		1,	0,	'i' },
+	{ "listen-port",	1,	0,	'l'},
+	{ NULL,			0,	NULL,	0 }
     };
 
     while (1) {
 		int c;
 
-		c = getopt_long(argc, argv, "i:", long_options, NULL);
+		c = getopt_long(argc, argv, "i:l:", long_options, NULL);
 		if (c == -1)
 			break;
 
@@ -61,18 +63,28 @@ int main(int argc, char *argv[])
 				return 1;
 			}
 			break;
+		case 'l':
+			listen_port = strtol(optarg, NULL, 0);
+			if (listen_port < 0) {
+				usage(argv[0]);
+				return 1;
+			}
+			break;
 		default:
 			usage(argv[0]);
 			return 1;
 		}
-	}
+    }
 
-    printf("Initialize Server\n");
-    printf("Hostname:\t%s\n", hostname);
-    printf("IB-port:\t%d\n", ib_port);
+    if (listen_port <= 0) {
+	usage(argv[0]);
+	return 1;
+    }
+
+    printf("Hostname:        %s\n", hostname);
+    printf("IB Device Port:  %d\n", ib_port);
+    printf("Listen Port:     %d\n", listen_port);
     
-	//int num_node = argc - 1;
-	
     //  =======================================================
     //  Establish cluster as a main API
     //  Which could be found in main.c
@@ -81,6 +93,3 @@ int main(int argc, char *argv[])
     //  =======================================================
     return 0;
 }
-
-
-

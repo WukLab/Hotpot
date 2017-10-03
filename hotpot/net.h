@@ -1,47 +1,18 @@
 /*
- * Copyright (c) 2005 Topspin Communications.  All rights reserved.
+ * Copyright (c) 2016-2017 Wuklab, Purdue University. All rights reserved.
  *
- * This software is available to you under a choice of one of two
- * licenses.  You may choose to be licensed under the terms of the GNU
- * General Public License (GPL) Version 2, available from the file
- * COPYING in the main directory of this source tree, or the
- * OpenIB.org BSD license below:
- *
- *     Redistribution and use in source and binary forms, with or
- *     without modification, are permitted provided that the following
- *     conditions are met:
- *
- *      - Redistributions of source code must retain the above
- *        copyright notice, this list of conditions and the following
- *        disclaimer.
- *
- *      - Redistributions in binary form must reproduce the above
- *        copyright notice, this list of conditions and the following
- *        disclaimer in the documentation and/or other materials
- *        provided with the distribution.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  */
 
+/*
+ * Header for Hotpot's customized RDMA stack only.
+ */
 
 #ifndef HAVE_CLIENT_H
 #define HAVE_CLIENT_H
-
-
-//This is the version modified from 000be840c215d5da3011a2c7b486d5ae122540c4
-//It adds LOCKS, sge, and other things  into the system
-//Client.h is also modified.
-//Server is also modified to match this patch
-//Patch SERIAL_VERSION_ID: 04202300
-//Please make sure that this version is not fully tested inside dsnvm (interactions are not fully tested)
-
 
 #include <linux/sched.h>
 #include <linux/init.h>
@@ -61,8 +32,6 @@
 #include <linux/spinlock.h>
 #include <linux/memory.h>
 #include <linux/pagemap.h>
-//#include <linux/mm_inline.h>
-//#include <linux/rmap.h>
 #include <linux/buffer_head.h>
 #include <asm/tlbflush.h>
 #include <linux/semaphore.h>
@@ -89,18 +58,14 @@
 
 #include "dsnvm-common.h"
 
-#define DEBUG_SHINYEH
-
-
-#define MESSAGE_SIZE 4096
-#define CIRCULAR_BUFFER_LENGTH 256
-#define MAX_NODE 24
-#define LISTEN_PORT 18500
-#define RECV_DEPTH 256
-#define LID_SEND_RECV_FORMAT "0000:0000:000000:000000:00000000000000000000000000000000"
-#define NUM_PARALLEL_CONNECTION 4
+#define MESSAGE_SIZE			4096
+#define CIRCULAR_BUFFER_LENGTH		256
+#define MAX_NODE			24
+#define RECV_DEPTH			256
+#define NUM_PARALLEL_CONNECTION		4
+#define MAX_PARALLEL_THREAD		64
+#define LID_SEND_RECV_FORMAT		"0000:0000:000000:000000:00000000000000000000000000000000"
 #define MAX_CONNECTION MAX_NODE * NUM_PARALLEL_CONNECTION //Assume that MAX_CONNECTION is smaller than 256
-#define MAX_PARALLEL_THREAD 64
 #define WRAP_UP_NUM_FOR_WRID 256 //since there are 64 bits in wr_id, we are going to use 9-12 bits to do thread id waiting passing
 #define WRAP_UP_NUM_FOR_CIRCULAR_ID 256
 #define WRAP_UP_NUM_FOR_WAITING_INBOX 256
@@ -110,16 +75,16 @@
 //const int MAX_NODE = 4;
 #define SERVER_ID 0
 
-#define HIGH_PRIORITY 4
-#define LOW_PRIORITY 0
-#define KEY_PRIORITY 8
-#define CONGESTION_ALERT 2
-#define CONGESTION_WARNING 1
-#define CONGESTION_FREE 0
+#define HIGH_PRIORITY		4
+#define LOW_PRIORITY		0
+#define KEY_PRIORITY		8
+#define CONGESTION_ALERT	2
+#define CONGESTION_WARNING	1
+#define CONGESTION_FREE		0
 
 //MULTICAST RELATED
-#define MAX_MULTICAST_HOP 256
-#define MAX_LENGTH_OF_ATOMIC 256
+#define MAX_MULTICAST_HOP	256
+#define MAX_LENGTH_OF_ATOMIC	256
 
 wait_queue_head_t wq;
 spinlock_t wq_lock;
@@ -410,4 +375,4 @@ inline void ibapi_free_recv_buf(void *input_buf);
 inline void client_free_recv_buf(void *input_buf);
 int ibapi_send_reply_opt(int target_node, char *msg, int size, void **output_msg);
 
-#endif
+#endif /* HAVE_CLIENT_H */

@@ -3,27 +3,29 @@
 # Copyright (C) 2016-2017 Wuklab, Purdue. All rights reserved.
 #
 
-obj-m := dsnvm-net.o
-obj-m += dsnvm.o
+obj-m := hotpot_net.o
+obj-m += hotpot.o
+
+hotpot_net-y := net.o
 
 # Transaction Related
-dsnvm-y := xact.o
-dsnvm-y += xact_mrsw_master.o
+hotpot-y := xact.o
+hotpot-y += xact_mrsw_master.o
 
 # Hotpot Filesystem Interface
-dsnvm-y += super.o
-dsnvm-y += file.o
+hotpot-y += super.o
+hotpot-y += file.o
 
-dsnvm-y += init.o
-dsnvm-y += on.o dn.o replica.o
-dsnvm-y += vm.o rmap.o proc.o
-dsnvm-y += recovery.o
-dsnvm-y += migrate.o
+hotpot-y += init.o
+hotpot-y += on.o dn.o replica.o
+hotpot-y += vm.o rmap.o proc.o
+hotpot-y += recovery.o
+hotpot-y += migrate.o
 
 # Memory Management
-dsnvm-y += page_alloc.o
-dsnvm-y += swap.o
-dsnvm-y += event.o
+hotpot-y += page_alloc.o
+hotpot-y += swap.o
+hotpot-y += event.o
 
 # Targets
 all:

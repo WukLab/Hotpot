@@ -461,7 +461,7 @@ static const struct super_operations dsnvm_sb_ops = {
 
 static struct file_system_type dsnvm_fs_type = {
 	.owner		= THIS_MODULE,
-	.name		= "dsnvm",
+	.name		= "hotpot",
 	.mount		= dsnvm_mount,
 	.kill_sb	= kill_litter_super
 };

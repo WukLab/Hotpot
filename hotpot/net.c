@@ -1,4 +1,24 @@
-#include "dsnvm-net.h"
+/*
+ * Copyright (c) 2016-2017 Wuklab, Purdue University. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
+
+/*
+ * This file describes the customized RDMA-stack used by Hotpot.
+ * Check LITE (SOSP'17) for more design details.
+ *
+ * This module need 2 parameters: server's IP and port number.
+ * You can pass them during installation, for example:
+ * 	insmod hotpot_net.ko ip=192.168.1.1 port=18500
+ */
+
+#define pr_fmt(fmt) "hotpot-net: " fmt
+
+#include "net.h"
 #include <rdma/ib_verbs.h>
 #include <rdma/ib_umem.h>
 #include <rdma/ib_user_verbs.h>
@@ -6,9 +26,6 @@
 #include <linux/kernel.h>
 
 #define DEBUG_SHINYEH
-MODULE_AUTHOR("yiying, shinyeh");
-MODULE_LICENSE("GPL");
-
 //This is the version modified from 000be840c215d5da3011a2c7b486d5ae122540c4
 //It adds LOCKS, sge, and other things  into the system
 //Client.h is also modified.
@@ -2596,6 +2613,13 @@ uint64_t client_hash_mr(struct client_ibv_mr *input_mr)
 	return key;
 }
 
+static int param_port = 0;
+static char param_ip[64];
+static unsigned ip_a, ip_b, ip_c, ip_d;
+
+module_param_named(port, param_port, int, 0444);
+module_param_string(ip, param_ip, sizeof(param_ip), 0444);
+
 int ibapi_establish_conn(char *servername, int ib_port, unsigned long total_size)
 {
 	int     ret;
@@ -2606,8 +2630,7 @@ int ibapi_establish_conn(char *servername, int ib_port, unsigned long total_size
 	int server_id = 0;
 	struct pingpong_dest	my_dest;
 	struct pingpong_dest	rem_dest;
-	int port = LISTEN_PORT;
-
+	int port = param_port;
 
 	struct sockaddr_in	addr;
 	struct socket		*excsocket;
@@ -2708,7 +2731,7 @@ int ibapi_establish_conn(char *servername, int ib_port, unsigned long total_size
 	memset(&addr, 0, sizeof(struct sockaddr_in));
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(port);
-	addr.sin_addr.s_addr = htonl((((((192 << 8) | 168) << 8) | 0) << 8) | 1);
+	addr.sin_addr.s_addr = htonl((((((ip_a << 8) | ip_b) << 8) | ip_c) << 8) | ip_d);
 	test_printk(KERN_ALERT "establish connection to %x to port %d\n",addr.sin_addr.s_addr, port);
 	sockfd = sock_create(PF_INET, SOCK_STREAM, IPPROTO_TCP, &excsocket);
 	ret = excsocket->ops->connect(excsocket, (struct sockaddr *)&addr, sizeof(addr), 0);
@@ -2773,13 +2796,18 @@ int ibapi_establish_conn(char *servername, int ib_port, unsigned long total_size
 	test_printk(KERN_ALERT "return before establish connection with NODE_ID: %d\n", NODE_ID);
 	return NODE_ID;
 }
-
 EXPORT_SYMBOL(ibapi_establish_conn);
+
 static int __init ibv_init_module(void)
 {
 	int ret;
 
-	test_printk(KERN_CRIT "installing ibv-API module\n");
+	sscanf(param_ip, "%u.%u.%u.%u", &ip_a, &ip_b, &ip_c, &ip_d);
+	if (ip_a > 255 || ip_b > 255 || ip_c > 255 || ip_d > 255) {
+		pr_info("Invalid IP: %s\n", param_ip);
+		return -EINVAL;
+	}
+	pr_info("Server IP: %s Port: %d\n", param_ip, param_port);
 
 	BUILD_BUG_ON(FIELD_SIZEOF(struct ib_wc, wr_id) < sizeof(void *));
 
@@ -2796,25 +2824,22 @@ static int __init ibv_init_module(void)
 		return ret;
 	}
 	atomic_set(&global_reqid, 0);
-	//ibapi_establish_conn("wuklab03", 1, 10);
+
+	pr_info("Hotpot network module installed\n");
+
 	return 0;
 }
 
 static void __exit ibv_cleanup_module(void)
 {
-	test_printk(KERN_INFO "Ready to remove module\n");
-	if(thread_poll_cq)
-	{
+	return;
+	if (thread_poll_cq) {
 		kthread_stop(thread_poll_cq);
 		thread_poll_cq = NULL;
 		test_printk(KERN_INFO "Kill poll cq thread\n");
 	}
-	else
-	{
-		test_printk(KERN_INFO "Nothing to kill\n");
-	}
-	if(thread_handler)
-	{
+
+	if (thread_handler) {
 		struct send_and_reply_format *recv;
 		recv = (struct send_and_reply_format *)kmalloc(sizeof(struct send_and_reply_format), GFP_ATOMIC);
 		recv->type = MSG_GET_FINISH;
@@ -2827,36 +2852,24 @@ static void __exit ibv_cleanup_module(void)
 		list_add_tail(&(recv->list), &request_list.list);
 		spin_unlock(&wq_lock);
 		/*wake_up_interruptible(&wq);*/
-		
-		
-	}
-	else
-	{
-		test_printk(KERN_INFO "Nothing to kill (handler)\n");
 	}
 
-	/*if(thread_poll_send_cq)
-	{
-		kthread_stop(thread_poll_send_cq);
-		thread_poll_send_cq = NULL;
-		test_printk(KERN_INFO "Kill poll cq thread\n");
-	}
-	else
-	{
-		test_printk(KERN_INFO "Nothing to kill\n");
-	}*/
-	if(post_receive_cache)
+	if (post_receive_cache)
 		kmem_cache_destroy(post_receive_cache);
-	if(header_cache)
+	if (header_cache)
 		kmem_cache_destroy(header_cache);
-	if(s_r_cache)
+	if (s_r_cache)
 		kmem_cache_destroy(s_r_cache);
-	if(intermediate_cache)
+	if (intermediate_cache)
 		kmem_cache_destroy(intermediate_cache);
 	ib_unregister_client(&ibv_client);
 	class_unregister(&ibv_class);
-}
 
+	pr_info("Hotpot network module removed\n");
+}
 
 module_init(ibv_init_module);
 module_exit(ibv_cleanup_module);
+
+MODULE_AUTHOR("yiying, shinyeh");
+MODULE_LICENSE("GPL");

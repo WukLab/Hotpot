@@ -15,7 +15,7 @@ For more information, check https://engineering.purdue.edu/WukLab/hotpot-socc17.
 2. One of the machines (served as central dispatcher) has installed InfiniBand OFED user-level library. The rest of the machines serve as Hotpot nodes and need to install hotpot-kernel (see below).
 
 ### S1: Compile Central Dispatcher (CD)
-Hotpot's CD source code is located in `hotpot/server/`. Assume this server has installed all IB user libraries, you can go to this directory and simply do `make`. After that, you will have a `mgmt_server`, which is our CD server. Before jumping to S4, get the IP address of CD server, which will be used by all other hotpot nodes.
+Hotpot's CD source code is located in `hotpot/server/`, which runs on user space. Assume this server has installed all IB user libraries, you can go to this directory and simply do `make`. After that, you will have a `hotpot-server`, which is our CD server. Before jumping to S4, get the IP address of CD server, which will be used by all other hotpot nodes.
 
 ### S2: Install and boot Hotpot kernel on Hotpot nodes
 1. First, compile the `hotpot-kernel` using `hotpot-kernel` directory. Compile the kernel with your machine's old config:  
@@ -30,9 +30,7 @@ Hotpot's CD source code is located in `hotpot/server/`. Assume this server has i
 ### S3: Config Hotpot
 
 #### S3.1: Config Network
-In our setting, IB needs Ethernet to bootstrap the initial connection. That is why we need the IP address of CD. But do note that all hotpot nodes only need to know the IP address of CD. Currently, the IP address of CD has to be manually changed in the source code. To do so, open `hotpot/dsnvm-net.c`, and replace the following line:  
->`addr.sin_addr.s_addr = htonl((((((128 << 8) | 46) << 8) | 115) << 8) | 33);`  
-with the IP address of your CD (Kind of raw, well..).
+In our setting, IB needs Ethernet to bootstrap the initial connection. That is why we need the IP address of CD. But do note that all hotpot nodes only need to know the IP address of CD. In all, to be able to connect hotpot and CD
 
 #### S3.2: Config Hotpot
 Hotpot has several options that can be configured at compile time. The default configurations have been tested to work well for our applications. We will provide a documentation of these configurations soon.

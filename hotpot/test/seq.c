@@ -15,7 +15,7 @@
 #include "../dsnvm-common.h"
 #include "dsnvm.h"
 
-#define NR_REGIONS		50
+#define NR_REGIONS		2
 #define NR_PAGES		(NR_REGIONS * DR_PAGE_NR)
 
 #define	NR_XACT_AREAS		32

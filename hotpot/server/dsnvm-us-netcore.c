@@ -835,6 +835,8 @@ int ibapi_send_reply(int target_node, char *msg, int size, char *output_msg)
     return wait_send_reply_id;
 }
 
+extern int listen_port;
+
 int server_keep_server_alive(void *ptr)
 {
     int ret;
@@ -868,7 +870,7 @@ int server_keep_server_alive(void *ptr)
     memset(send_buf, 0, sizeof(LID_SEND_RECV_FORMAT));
     //memset(output_buf, 0, sizeof(output_buf));
     myaddr.sin_family       = AF_INET;
-    myaddr.sin_port         = htons(LISTEN_PORT);
+    myaddr.sin_port         = htons(listen_port);
     myaddr.sin_addr.s_addr  = htonl(INADDR_ANY);
     
     //Bind socket and start listen
