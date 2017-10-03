@@ -2832,7 +2832,6 @@ static int __init ibv_init_module(void)
 
 static void __exit ibv_cleanup_module(void)
 {
-	return;
 	if (thread_poll_cq) {
 		kthread_stop(thread_poll_cq);
 		thread_poll_cq = NULL;

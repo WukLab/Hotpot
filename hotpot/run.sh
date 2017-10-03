@@ -1,19 +1,29 @@
 #!/bin/bash
 
 #
-# physaddr and size depends on your memmap
+# This file will load hotpot modules and mount /mnt/hotpot.
+# Afterwards, you can play with hotpot by manipulating files under hotpot fs.
+# You can change the parameters accordingly based on your setting.
+#
+
+#
 # [physaddr, physaddr + size) must fully fall into memmap reserved region.
-# Otherwise ioremap will fail.
 #
 MOUNT_OPTIONS="physaddr=4G,size=4G,verbose,dbgmask=0"
 MOUNT_POINT=/mnt/hotpot
 
-IB_MODULE=net.ko
-DSNVM_MODULE=hotpot.ko
+#
+# Central Dispatcher's IP and listening port
+#
+SERVER_IP="192.168.1.1"
+SERVER_PORT=18500
+
+NET_MODULE=hotpot_net.ko
+HOTPOT_MODULE=hotpot.ko
 
 start_hotpot() {
-	insmod $IB_MODULE
-	insmod $DSNVM_MODULE
+	insmod $NET_MODULE ip=$SERVER_IP port=$SERVER_PORT
+	insmod $HOTPOT_MODULE
 
 	if [ -e $MOUNT_POINT ]; then
 		if [ -f $MOUNT_POINT ]; then
@@ -32,8 +42,8 @@ quit_hotpot() {
 	if [ "$n" != "0" ]; then
 		umount $MOUNT_POINT
 	fi
-	rmmod $DSNVM_MODULE
-	rmmod $IB_MODULE
+	rmmod $HOTPOT_MODULE
+	rmmod $NET_MODULE
 }
 
 usage() {
