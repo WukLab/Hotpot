@@ -1,4 +1,4 @@
-#include "rc_client.h"
+#include "dsnvm-net.h"
 #include <rdma/ib_verbs.h>
 #include <rdma/ib_umem.h>
 #include <rdma/ib_user_verbs.h>
@@ -2708,7 +2708,7 @@ int ibapi_establish_conn(char *servername, int ib_port, unsigned long total_size
 	memset(&addr, 0, sizeof(struct sockaddr_in));
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(port);
-	addr.sin_addr.s_addr = htonl((((((128 << 8) | 46) << 8) | 115) << 8) | 33);
+	addr.sin_addr.s_addr = htonl((((((192 << 8) | 168) << 8) | 0) << 8) | 1);
 	test_printk(KERN_ALERT "establish connection to %x to port %d\n",addr.sin_addr.s_addr, port);
 	sockfd = sock_create(PF_INET, SOCK_STREAM, IPPROTO_TCP, &excsocket);
 	ret = excsocket->ops->connect(excsocket, (struct sockaddr *)&addr, sizeof(addr), 0);

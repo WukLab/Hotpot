@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IB_MODULE=rc_pingpong.ko
+IB_MODULE=dsnvm-net.ko
 DSNVM_MODULE=dsnvm.ko
 MOUNT_OPTIONS="physaddr=4G,size=16G,verbose,dbgmask=0"
 MOUNT_POINT=/mnt/dsnvm

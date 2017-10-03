@@ -3,7 +3,7 @@
 # Copyright (C) 2016-2017 Wuklab, Purdue. All rights reserved.
 #
 
-obj-m := rc_pingpong.o
+obj-m := dsnvm-net.o
 obj-m += dsnvm.o
 
 # Transaction Related
