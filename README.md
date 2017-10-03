@@ -19,9 +19,9 @@ Hotpot's CD source code is located in `hotpot/server/`, which runs on user space
 
 ### S2: Install and boot Hotpot kernel on Hotpot nodes
 1. First, compile the `hotpot-kernel` using `hotpot-kernel` directory. Compile the kernel with your machine's old config:  
->cp /boot/config-your-default-kernel-version hotpot-kernel/.config  
->make oldconfig (Recommend to have a special _CONFIG_LOCALVERSION="-hotpot"_)  
->make && make modules && make modules_install && make install  
+`cp /boot/config-your-default-kernel-version hotpot-kernel/.config`  
+`make oldconfig` (Recommended to have a special _CONFIG_LOCALVERSION="-hotpot"_)  
+`make && make modules && make modules_install && make install`  
 
 2. To run Hotpot, a contiguous physical memory region must be reserved for Hotpot usage. To do so, CentOS users could open `/boot/grub2/grub.cfg` and find hotpot-kernel's entry. Append `memmap=N[KMG]\$S[KMG]` to kernel parameter. The actual parameter depends on your usage. For example, to reserve `[4G - 20G]`, you can append `memmap=16G\$4G`.
 
@@ -35,19 +35,17 @@ Hotpot has several options that can be configured at compile time. The default c
 After boot into `hotpot-kernel` successfully (S2), go to `hotpot` directory and type `make` to compile two modules. If the kernel is right, you will have 2 modules compiled: `hotpot.ko` and `hotpot_net.ko`. `hotpot.ko` is the Hotpot module, `hotpot_net.ko` is a customized RDMA-stack which Hopot runs on top of.
 
 ### S5: Run
-
-In general, to run hotpot, you need to start CD server first, which will listen on a port you specified. After that, start hotpot node 1 by 1 to establish the connection with CD server.
+In general, to run hotpot, you need to start CD server first, which will listen on a port you specified. After that, start hotpot node one by one to establish the connection with CD server.
 
 #### S5.1 Run CD
 Assume the IP address of CD is `192.168.1.1`, and you want CD to listen on port `18500`, then you can start CD server like this:  
 > `./hotpot-server -l 18500`  
 
 #### S5.2: Run Hotpot
-There is a simple script `hotpot/run.sh`, which help us to install modules and mount hotpot's filesystem. The hotpot's filesystem interface is used to simplify our programming experience by supporting commonly used POSIX APIs, e.g., `open`, `close`, and `msync`.  
-After you run `./run.sh 1`, you should be able to see some output at CD side. To connect multiple Hotpot nodes, just do the above steps one by one.  
+There is a simple script `hotpot/run.sh`, which help us to install modules and mount hotpot's filesystem. The hotpot's filesystem interface is used to simplify our programming experience by supporting commonly used POSIX APIs, e.g., `open`, `close`, and `msync`. After you run `./run.sh 1`, you should be able to see some output at CD side. To connect multiple Hotpot nodes, just do the above steps one by one.  
 
 In detail:  
-1. **insmod hotpot_net.ko ip=192.168.1.1 port=18500** 
+1. **insmod hotpot_net.ko ip=192.168.1.1 port=18500**  
       This will insmod hotpot network module  
       ip=192.168.1.1 port=18500 need to match CD's setting  
 2. **insmod hotpot.ko**  
