@@ -27,7 +27,7 @@
 #include <signal.h>
 
 #include "mgmt_server.h"
-#include "pingpong.h"
+#include "dsnvm-us-netbase.h"
 #include <pthread.h>    /* POSIX Threads */
 #include <semaphore.h>
 

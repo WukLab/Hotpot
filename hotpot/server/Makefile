@@ -9,7 +9,7 @@ APPS    := mgmt-server
 
 all: ${APPS}
 
-mgmt-server: init.o network_handler.o rc_pingpong.o pingpong.o create_file.o open_file.o fifo.o dsnvm-server.o thpool.o
+mgmt-server: init.o network_handler.o dsnvm-us-netcore.o dsnvm-us-netbase.o create_file.o open_file.o fifo.o dsnvm-server.o thpool.o
 	${LD} -o $@ $^ ${LDLIBS} $(DEPS)
 
 clean:

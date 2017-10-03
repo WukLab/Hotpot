@@ -1,4 +1,4 @@
-Modify server port from rc_pingpong.c
+Modify server port from dsnvm-us-netcore.c
 This port configuration of this version is 18700.
 And the client side should be modified accordingly with server.
 It could be modified in client.h(CLIENT SIDE)

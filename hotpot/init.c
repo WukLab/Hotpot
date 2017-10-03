@@ -627,7 +627,7 @@ static void mmap_consensus(struct file *file, unsigned long *addr, unsigned long
 
 /*
  * SYSCALL hooks
- * Only valid while rc_pingpong and dsnvm are installed.
+ * Only valid while dsnvm-net and dsnvm are installed.
  */
 static const struct dist_hooks hooks = {
 	.dist_lock_hook = (int (*)(void *))ibapi_lock,
