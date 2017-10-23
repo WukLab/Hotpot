@@ -25,8 +25,13 @@
  * Comment this out to disable MRSW:
  */
 #if 0
-#define DSNVM_MODE_MRSW
-#define DSNVM_MODE_MRSW_IN_KERNEL
+# define DSNVM_MODE_MRSW
+# define DSNVM_MODE_MRSW_IN_KERNEL
+#endif
+
+/* MRSW Master Node Number */
+#ifdef DSNVM_MODE_MRSW_IN_KERNEL
+# define DSNVM_MRSW_MASTER_NODE		1
 #endif
 
 enum {

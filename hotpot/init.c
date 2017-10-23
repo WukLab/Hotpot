@@ -303,7 +303,8 @@ void dsnvm_send_machine_join(void)
 	spin_unlock(&machine_bitmap_lock);
 
 #ifdef DSNVM_MODE_MRSW_IN_KERNEL
-	if (DSNVM_LOCAL_ID == 1 && atomic_read(&nr_client_machines) != 0)
+	if (DSNVM_LOCAL_ID == DSNVM_MRSW_MASTER_NODE &&
+	    atomic_read(&nr_client_machines) != 0)
 		DSNVM_BUG();
 #endif
 

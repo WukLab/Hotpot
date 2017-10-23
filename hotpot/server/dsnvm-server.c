@@ -486,12 +486,12 @@ static void handle_machine_join(char *input, unsigned int input_len,
 	 * Alright, we have a consent from all online machines
 	 *
 	 * For MRSW in kernel:
-	 *	Node 1 is used as the MRSW sync point,
+	 *	DSNVM_MODE_MRSW_IN_KERNEL is used as the MRSW sync point,
 	 *	we do not treat it as a normal hotpot node.
 	 */
 
 #ifdef DSNVM_MODE_MRSW_IN_KERNEL
-	if (sender_id != 1)
+	if (sender_id != DSNVM_MRSW_MASTER_NODE)
 #endif
 		set_bit(sender_id, DSNVM_CLIENT_MACHINES);
 
@@ -515,7 +515,7 @@ static void handle_machine_leave(char *input, unsigned int input_len,
 
 	if (unlikely(!test_bit(sender_id, DSNVM_CLIENT_MACHINES))) {
 #ifdef DSNVM_MODE_MRSW_IN_KERNEL
-		if (sender_id == 1) {
+		if (sender_id == DSNVM_MRSW_MASTER_NODE) {
 			*(int *)output = DSNVM_REPLY_SUCCESS;
 			return;
 		}
@@ -924,7 +924,7 @@ void init_dsnvm_server(void)
 	pthread_spin_init(&mrsw_xact_page_lock, PTHREAD_PROCESS_PRIVATE);
 	dsnvm_printk("Transaction Model: MRSW");
 #ifdef DSNVM_MODE_MRSW_IN_KERNEL
-	dsnvm_printk("  MRSW will be handled by nodeid: 1");
+	dsnvm_printk("  MRSW Master Node: %d", DSNVM_MRSW_MASTER_NODE);
 #endif
 #else
 	dsnvm_printk("Transaction Model: MRMW");

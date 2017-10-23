@@ -33,3 +33,7 @@ The following code snippt controls what transaction model hotpot is using. The c
 #define DSNVM_MODE_MRSW_IN_KERNEL
 #endif
 ```
+
+#### MRSW Master Node
+Option: `DSNVM_MRSW_MASTER_NODE`  
+Explanation: MRSW need a master node to handle all transaction requests. Currently, master node is not allowed to run any transactions. This means if want two hotpot nodes to run transaction, you will have to have three hotpot nodes, one of them is dedicated to be used as master node.

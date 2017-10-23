@@ -2691,7 +2691,7 @@ static int mrsw_final_call_to_cd(bool atomic_commit, int xact_id)
 
 #ifdef DSNVM_MODE_MRSW_IN_KERNEL
 	/* hardcoded node 1 */
-	nodeid = 1;
+	nodeid = DSNVM_MRSW_MASTER_NODE;
 #else
 	/* CD */
 	nodeid = 0;
@@ -3651,7 +3651,7 @@ static int dsnvm_begin_xact(struct vm_area_struct **vma,
 	*((int *)msg+1) = xact_id;
 
 #ifdef DSNVM_MODE_MRSW_IN_KERNEL
-	ibapi_send_reply(1, msg, size, (char *)(&reply));
+	ibapi_send_reply(DSNVM_MRSW_MASTER_NODE, msg, size, (char *)(&reply));
 #else
 	ibapi_send_reply(0, msg, size, (char *)(&reply));
 #endif
