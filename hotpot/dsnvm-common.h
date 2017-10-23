@@ -29,6 +29,23 @@
 #define DSNVM_MODE_MRSW_IN_KERNEL
 #endif
 
+enum {
+	XACT_MRMW,
+	XACT_MRSW,
+};
+
+#ifdef DSNVM_MODE_MRSW
+# define XACT_MODE		XACT_MRSW
+#else
+# define XACT_MODE		XACT_MRMW
+#endif
+
+/* Maximum number of nodes dsnvm support */
+#define DSNVM_MAX_NODE			24
+
+/* Maximum length of dsnvm filename */
+#define DSNVM_MAX_NAME			128
+
 /**
  * This shift determins the size of a data region (4KB pages):
  * ...
@@ -45,28 +62,16 @@
 #define DR_PAGE_NR			(1<<DR_PAGE_NR_SHIFT)
 #define DR_SIZE				(DR_PAGE_NR*DSNVM_PAGE_SIZE)
 
-enum {
-	XACT_MRMW,
-	XACT_MRSW,
-};
+/*
+ * This shift determins the maximum size of dsnvm file:
+ * FILE_SIZE = 2^(12 + DR_PAGE_NR_SHIFT + DSNVM_MAX_REGIONS_SHIFT)
+ */
+#define DSNVM_MAX_REGIONS_SHIFT		11
+#define DSNVM_MAX_REGIONS		(1<<DSNVM_MAX_REGIONS_SHIFT)
+#define DSNVM_MAX_FILE_SIZE		(DSNVM_MAX_REGIONS*DR_SIZE)
 
-#ifdef DSNVM_MODE_MRSW
-# define XACT_MODE		XACT_MRSW
-#else
-# define XACT_MODE		XACT_MRMW
-#endif
-
-/* Retry to begin transaction */
-#define DSNVM_RETRY			((int)(~0U>>1))
-
-/* Maximum msgs in one ibapi atomic call */
-#define MAX_ATOMIC_SEND_NUM		4096
-
-/* Maximum number of nodes dsnvm support */
-#define DSNVM_MAX_NODE			24
-
-/* Maximum length of dsnvm filename */
-#define DSNVM_MAX_NAME			128
+/* Maximum number of opened files */
+#define NR_DSNVM_FILE			5
 
 /* x86 */
 #define CACHELINE_SIZE			(64)
@@ -82,16 +87,11 @@ enum {
 #define DSNVM_MAX_REQUEST_LEN		(DSNVM_PAGE_SIZE << 1)
 #define DSNVM_MAX_REPLY_LEN		(DSNVM_PAGE_SIZE << 1)
 
-/*
- * This shift determins the maximum size of dsnvm file:
- * FILE_SIZE = 2^(12 + DR_PAGE_NR_SHIFT + DSNVM_MAX_REGIONS_SHIFT)
- */
-#define DSNVM_MAX_REGIONS_SHIFT		11
-#define DSNVM_MAX_REGIONS		(1<<DSNVM_MAX_REGIONS_SHIFT)
-#define DSNVM_MAX_FILE_SIZE		(DSNVM_MAX_REGIONS*DR_SIZE)
+/* Retry to begin transaction */
+#define DSNVM_RETRY			((int)(~0U>>1))
 
-/* Maximum number of opened files */
-#define NR_DSNVM_FILE			5
+/* Maximum msgs in one ibapi atomic call */
+#define MAX_ATOMIC_SEND_NUM		4096
 
 enum DSNVM_REQUEST_OPS {		/* From->To; Type; Description; More */
 	DSNVM_OP_INVALID,		/* Empty, invalid operation */
