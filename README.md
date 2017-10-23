@@ -6,7 +6,7 @@ We built Hotpot as a linux module for the Linux 3.11.1 kernel (a small part of t
 ## Caution:  
 This is a BETA version, use under your own risk! We will have our stable version ready soon.
 
-For more information, check https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf
+For more information, please check [Hotpot paper](https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf).
 
 ## How To Run Hotpot
 
@@ -29,7 +29,7 @@ Hotpot's CD source code is located in `hotpot/server/`, which runs on user space
 
 ### S3: Config Hotpot
 
-Hotpot has several options that can be configured at compile time. The default configurations have been tested to work well for our applications. We will provide a documentation of these configurations soon.
+Hotpot has several options that can be configured at compile time. The default configurations have been tested to work well for our applications. For detailed config options, please refer to this [document](https://github.com/WukLab/Hotpot/blob/master/hotpot/Documentations/configurations.md).
 
 ### S4: Compile Modules
 After boot into `hotpot-kernel` successfully (S2), go to `hotpot` directory and type `make` to compile two modules. If the kernel is right, you will have 2 modules compiled: `hotpot.ko` and `hotpot_net.ko`. `hotpot.ko` is the Hotpot module, `hotpot_net.ko` is a customized RDMA-stack which Hopot runs on top of.
