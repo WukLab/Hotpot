@@ -262,7 +262,6 @@ int main(int argc, char *argv[])
 		die("fail to init local barrier");
 
 	//fetch_all_pages();
-	dist_sync_barrier();
 
 	for (i = 0; i < NR_THREADS_PER_NODE; i++) {
 		args[i] = i;
