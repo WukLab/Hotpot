@@ -10,15 +10,15 @@ Expanation: This determins the number of maximum hotpot nodes can be connected a
 ## Data Options
 ### Data Region Size
 Option: `DR_PAGE_NR_SHIFT`  
-Explanation: This option determines the size of a data region. Since Hotpot currently only supports 4KB page size, so if you set DR_PAGE_NR_SHIFT to 10, that will make the region size to 4MB.  
+Explanation: This option determines the size of a data region. Since Hotpot currently only supports 4KB page size, so if you set DR_PAGE_NR_SHIFT to 10, that will make the region size to 4MB. The math is: `Data_Region_Size = PAGE_SIZE * (1 << DR_PAGE_NR_SHIFT)`.  
 
 ### Maximum Dataset (File) Size
 Option: `DSNVM_MAX_REGIONS_SHIFT`  
-Explanation: This option determins the maximum size of a hotpot dataset (or file). A hotpot dataset consists of multiple data regions. And the number of data regions equals to `1<<DSNVM_MAX_REGIONS_SHIFT`. Do note that the file concept is used by hotpot to reuse the posix file APIs.
+Explanation: This option determins the maximum size of a hotpot dataset (or file). A hotpot dataset consists of multiple data regions. And the number of data regions equals to `1 << DSNVM_MAX_REGIONS_SHIFT`. Do note that the file concept is used by hotpot to reuse the posix file APIs.
 
-### Number of Maximum Files
+### Maximum Number of Datasets (Files)
 Option: `NR_DSNVM_FILE`  
-Explanation: This determins how many hotpot files can be opened at the same time in one machine.
+Explanation: This determins how many hotpot datasets (or files) can be opened at the same time in one machine. Since we target applications that only use a few large datasets, the typical number of datasets should be small.
 
 ### Transation Mode
 The following code snippt controls what transaction model hotpot is using. The current version only supports one transaction model at one time. We have per-file transaction model which not reliable, so we decide to push it out in next version. To enable MRSW, change `#if 0` to `#if 1`. To enable MRMW, keep `#if 0`.
