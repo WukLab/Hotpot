@@ -29,6 +29,10 @@ static void open_and_mmap_files(void)
 }
 ```
 
+### mmap()
+`void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);`  
+All the parameters are using the current semantic. Note that @length argument specifies the length of the mapping. The maximum @length equals to the maximum length of a dataset, which is configured at building time (See [configurations.md](https://github.com/WukLab/Hotpot/blob/master/hotpot/Documentations/configurations.md) for how to config the maximum dataset size). If mmap() returns error, please use `dmesg` to check error messages.
+
 ## Distributed Barrier
 Hotpot introduces a distributed barrier by adding a new syscall `dist_sync_barrier`. This syscall is synchronize, it will wait until all online hotpot nodes have called dist_sync_barrier. Currently, the barrier is `per-node`, instead of `per-application`. This means once an application from one node has called this barrier, all other online nodes need to do so also. We add a wrap for this syscall, you can check the [sample code](https://github.com/WukLab/Hotpot/blob/master/hotpot/test/dsnvm.h).
 
