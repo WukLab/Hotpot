@@ -12,9 +12,9 @@ Expanation: This determins the number of maximum hotpot nodes can be connected a
 Option: `DR_PAGE_NR_SHIFT`  
 Explanation: This option determines the size of a data region. Since Hotpot currently only supports 4KB page size, so if you set DR_PAGE_NR_SHIFT to 10, that will make the region size to 4MB.  
 
-### Maximum File Size
+### Maximum Dataset (File) Size
 Option: `DSNVM_MAX_REGIONS_SHIFT`  
-Explanation: This option determins the maximum size of a hotpot file. A hotpot file consists of multiple data regions. And the number of data regions equals to `1<<DSNVM_MAX_REGIONS_SHIFT`. Do note that the file concept is used by hotpot to reuse the posix file apis.
+Explanation: This option determins the maximum size of a hotpot dataset (or file). A hotpot dataset consists of multiple data regions. And the number of data regions equals to `1<<DSNVM_MAX_REGIONS_SHIFT`. Do note that the file concept is used by hotpot to reuse the posix file APIs.
 
 ### Number of Maximum Files
 Option: `NR_DSNVM_FILE`  
