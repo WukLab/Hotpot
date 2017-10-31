@@ -68,7 +68,7 @@ static void open_and_mmap_files(void)
 		NR_REGIONS, NR_PAGES, mmap_len);
 
 	/* Open DSNVM file */
-	fd_dsnvm = open("/mnt/dsnvm/abc", O_RDWR | O_CREAT);
+	fd_dsnvm = open("/mnt/hotpot/abc", O_RDWR | O_CREAT);
 	if (fd_dsnvm < 0)
 		die("Can not open file (1): %s", strerror(fd_dsnvm));
 

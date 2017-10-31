@@ -48,12 +48,12 @@ enum {
 
 /*
  * e.g.
- * mount -t dsnvm -o physaddr=4G,size=2G,errors=continue,verbose=1 none /mnt/dsnvm/
+ * mount -t dsnvm -o physaddr=4G,size=2G,errors=continue,verbose=1 none /mnt/hotpot/
  * -- Base physical address is 4G (should have been reserved at boot time)
  * -- NVM area is 2G (should have been reserved at boot time)
  * -- Continue when error happens
  * -- Verbose debug message
- * -- Mount at /mnt/dsnvm/
+ * -- Mount at /mnt/hotpot/
  */
 static const match_table_t tokens = {
 	{ Opt_addr,		"physaddr=%s"		},
