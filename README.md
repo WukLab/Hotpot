@@ -49,10 +49,13 @@ In detail:
       This will insmod hotpot network module  
       ip=192.168.1.1 port=18500 need to match CD's setting  
 2. **insmod hotpot.ko**  
-3. **mount -t hotpot -o /mnt/hotpot none physaddr=4G,size=4G,verbose,dbgmask=0**  
+3. **mount -t hotpot -o physaddr=4G,size=4G,verbose,dbgmask=0 none /mnt/hotpot**  
       Mount `/mnt/hotpot`  
       [physaddr, physaddr+size) must fully fall into `memmap` reserved area.  
 (Check `run.sh` for more details)
+
+
+Note : If the run.sh fails at insmod, you might need to remove the module using rmmod and then retry.
 
 ## S6: Run User Programs
 There are several code samples under `hotpot/test/`. Basically, we `open (or create)` a dataset by calling POSIX `open`. After that, the opened fd will be mmap'ed into application's address space. If mmap succeed, application can access the DSPM space directly and transpatently.
