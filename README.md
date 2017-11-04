@@ -8,6 +8,9 @@ This is a BETA version, use under your own risk! We will have our stable version
 
 For more information, please check [Hotpot paper](https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf).
 
+# Documentation
+This file is a high level HOW-TO run hotpot tutorial. For more information about how to configure Hotpot and Hotpot APIs, please refer to [hotpot/Documentations](https://github.com/WukLab/Hotpot/tree/master/hotpot/Documentations).
+
 # How To Run Hotpot
 
 ## Prerequisites
@@ -60,8 +63,6 @@ There are several code samples under `hotpot/test/`. Basically, we `open (or cre
 # Debug Hotpot
 Hotpot will create two special files: `/proc/dsnvm-event` and `/proc/dsnvm`. The first one lists a lot of hotpot internal activities, which will help us to understand what is going within the system. The latter one lists some general informations. Both of them will help us debug and tune the system. If you have any issues with deploying Hotpot, please contact Yizhou Shan <shan13@purdue.edu>.
 
-# Documentation
-Please refer to [hotpot/Documentations](https://github.com/WukLab/Hotpot/tree/master/hotpot/Documentations) for more details.
 
 ## To cite Hotpot, please use:
 
