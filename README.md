@@ -51,11 +51,8 @@ In detail:
 2. **insmod hotpot.ko**  
 3. **mount -t hotpot -o physaddr=4G,size=4G,verbose,dbgmask=0 none /mnt/hotpot**  
       Mount `/mnt/hotpot`  
-      [physaddr, physaddr+size) must fully fall into `memmap` reserved area.  
-(Check `run.sh` for more details)
-
-
-Note : If the run.sh fails at insmod, you might need to remove the module using rmmod and then retry.
+      `[physaddr, physaddr+size)` must fully fall into `memmap` reserved area.  
+(Please check `run.sh` for detailed steps. Please note that if `run.sh` fails at some intermediate steps, hotpot_net.ko or hotpot.ko can already be installed. You need to do rmmod before retry.)
 
 ## S6: Run User Programs
 There are several code samples under `hotpot/test/`. Basically, we `open (or create)` a dataset by calling POSIX `open`. After that, the opened fd will be mmap'ed into application's address space. If mmap succeed, application can access the DSPM space directly and transpatently.
