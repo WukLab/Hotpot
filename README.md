@@ -8,7 +8,7 @@ This file is a high level __HOW-TO__ run hotpot tutorial.
 
 For Hotpot APIs and Hotpot configurations, please check [hotpot/Documentations](https://github.com/WukLab/Hotpot/tree/master/hotpot/Documentations).
 
-For common setup and runtime issues, please check [KNOWN-ISSUES](https://github.com/WukLab/Hotpot/tree/master/hotpot/KNOWN-ISSUES.md).
+For common setup and runtime issues, please check [KNOWN-ISSUES](https://github.com/WukLab/Hotpot/blob/master/KNOWN-ISSUES.md).
 
 For more information about Hotpot itself, please check [Hotpot paper](https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf).
 
