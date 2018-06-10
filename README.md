@@ -19,7 +19,8 @@ This is a BETA version, use under your own risk!
 
 ## Prerequisites
 1. More than two machines connected via InfiniBand.
-2. One of the machines (served as central dispatcher) has installed InfiniBand OFED user-level library. The rest of the machines serve as Hotpot nodes and need to install hotpot-kernel (see below).
+2. One of the machines (served as central dispatcher) has installed InfiniBand OFED package. The rest of the machines serve as Hotpot nodes and need to install hotpot-kernel (see below).
+3. Note on OFED: The network layer of Hotpot is an early version of [LITE](https://github.com/wuklab/LITE), which is not compatible with OFED kernel modules. That means, the nodes that are going to run Hotpot clients should not have OFED kernel modules installed. For the cental dispatcher node, you can install both user-level and kernel-level OFED packages. If you want to know more about OFED, please refer to this [document](https://github.com/lastweek/LITE/blob/master/README.md).
 
 ## S1: Compile central dispatcher (CD) server
 Hotpot's CD source code is located in `hotpot/server/`, which runs on user space. Assume this machine has installed all IB user libraries, you can go to this directory and simply do `make`. After that, you will have a `hotpot-server`, which is our CD server. Also, get the IP address of this CD server, which will be used by all other hotpot nodes to establish connection.
