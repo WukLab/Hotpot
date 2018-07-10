@@ -1,7 +1,8 @@
 # Hotpot Debug/Trace Options
-This file describes how applications writers can debug and trace various activies within Hotpot. All Hotpot's runtime information is exported through two `/proc` files. Generic information is expored through `/proc/dsnvm`, and various events counting are exported through `/proc/dsnvm-event`. (Love this feature!)
+This file describes how applications writers can debug and trace various activies within Hotpot. All Hotpot's runtime information is exported through two `/proc` files. Generic information is expored through `/proc/dsnvm`, and various events counting are exported through `/proc/dsnvm-event`(Love this feature!). You are also able to control Hotpot internal behaviour by writing to `/proc/dsnvm`.
 
 ## /proc/dsnvm
+### Generic Information
 This file export three different kind of information. The first is `generic system information`, the second is `transaction runtime information`, and the last part presents information of `persiste memory allocator`. It is highly recommened to check the `DSNVM Local ID`, `Region size`, `DSNVM file size`, `Transaction Model` during each run, to see if those match your expectations.
 
 For example, `cat /proc/dsnvm`:
@@ -60,6 +61,22 @@ Order 2           244852
 CPU00       31     186        0
 CPU01       31     186        0
 ....
+```
+
+### Control
+We build a write handler for `/proc/dsnvm`, and users are able to control Hotpot via writing commands to it. A detailed list of commands can be found [here](https://github.com/WukLab/Hotpot/blob/master/hotpot/proc.c#L342). Here we list some simple ones:
+
+```
+/*
+ * echo dbgmask=1 > /proc/dsnvm
+ * 	Change dbgmask to 1
+ *
+ * echo dump_pg=12340 > /proc/dsnvm
+ * 	Dump dsnvm page info of dsnvm_pfn 12340
+ *
+ * echo dbgmask=64,migrate,dr_no=3,nid=2 > /proc/dsnvm
+ *	Change dbgmask to 64, migrate ON chunk dr_no 3 to node 2
+ */
 ```
 
 ## /proc/dsnvm-event
