@@ -1,4 +1,8 @@
 # Hotpot
+
+![Status](https://img.shields.io/badge/Version-Experimental-yellowgreen.svg)
+![AUR](https://img.shields.io/aur/license/yaourt.svg?style=popout)
+
 Hotpot is a kernel-level, RDMA-based Distributed Shared Persistent Memory (DSPM) system. Applications can access data through memory load/store instructions and at the same time make the data durable and survive various types of failures.
 
 We built Hotpot as a linux module for the Linux 3.11.1 kernel (a small part of the original kernel is changed because of a limitation of the 3.11.1 kernel and will not be necessary for newer kernels). The Hotpot kernel module is in `hotpot/`. The folder `hotpot/test` has some simple examples of using Hotpot.
