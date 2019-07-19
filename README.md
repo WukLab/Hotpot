@@ -1,7 +1,6 @@
 # Hotpot
 
-![Status](https://img.shields.io/badge/Version-Experimental-yellowgreen.svg)
-![AUR](https://img.shields.io/aur/license/yaourt.svg?style=popout)
+![Status](https://img.shields.io/badge/Version-Experimental-green.svg)
 
 Hotpot is a kernel-level, RDMA-based Distributed Shared Persistent Memory (DSPM) system. Applications can access data through memory load/store instructions and at the same time make the data durable and survive various types of failures.
 
