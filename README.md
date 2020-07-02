@@ -13,7 +13,7 @@ For Hotpot APIs and Hotpot configurations, please check [hotpot/Documentations](
 
 For common setup and runtime issues, please check [KNOWN-ISSUES](https://github.com/WukLab/Hotpot/blob/master/KNOWN-ISSUES.md).
 
-For more information about Hotpot itself, please check [Hotpot paper](https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf).
+For more information about Hotpot itself, please check [Hotpot paper](https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf) and [slide](http://lastweek.io/pubs/slides/Yizhou-Hotpot-SoCC17.pptx)
 
 # Caution:  
 This is a BETA version, use under your own risk!
