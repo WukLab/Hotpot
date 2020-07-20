@@ -1,6 +1,9 @@
 # Hotpot
 
-![Status](https://img.shields.io/badge/Version-Experimental-green.svg)
+
+[**[ACM SoCC 2017 Paper]**](http://lastweek.io/pubs/SoCC17-Hotpot.pdf)  &nbsp;
+[**[Slides]**](http://lastweek.io/pubs/slides/Yizhou-Hotpot-SoCC17.pptx)  &nbsp;
+[**[Poster]**](http://lastweek.io/pubs/slides/Poster-Hotpot-SoCC17.pptx)
 
 Hotpot is a kernel-level, RDMA-based Distributed Shared Persistent Memory (DSPM) system. Applications can access data through memory load/store instructions and at the same time make the data durable and survive various types of failures.
 
@@ -12,8 +15,6 @@ This file is a high level __HOW-TO__ run hotpot tutorial.
 For Hotpot APIs and Hotpot configurations, please check [hotpot/Documentations](https://github.com/WukLab/Hotpot/tree/master/hotpot/Documentations).
 
 For common setup and runtime issues, please check [KNOWN-ISSUES](https://github.com/WukLab/Hotpot/blob/master/KNOWN-ISSUES.md).
-
-For more information about Hotpot itself, please check [Hotpot paper](https://engineering.purdue.edu/WukLab/hotpot-socc17.pdf) and [slide](http://lastweek.io/pubs/slides/Yizhou-Hotpot-SoCC17.pptx)
 
 # Caution:  
 This is a BETA version, use under your own risk!
@@ -74,10 +75,10 @@ Hotpot will create two special files: `/proc/dsnvm-event` and `/proc/dsnvm`. The
 
 ## To cite Hotpot, please use:
 
->\@inproceedings{Shan17-SOCC-Hotpot\,  
+>\@inproceedings{Hotpot-SoCC17\,  
 > author = {Yizhou Shan and Shin-Yeh Tsai and Yiying Zhang},  
-> title = {Distributed Shared Persistent Memory},  
-> booktitle = {Proceedings of the 8th Annual Symposium on Cloud Computing (SOCC '17)},  
+> title = {{Distributed Shared Persistent Memory}},  
+> booktitle = {{Proceedings of the 8th Annual Symposium on Cloud Computing (SOCC '17)}},  
 > year = {2017},  
 > address = {Santa Clara, CA, USA},  
 > month = {September}  
